@@ -1,0 +1,319 @@
+<!--<script src="script.js" defer></script>-->
+<script>
+  async function getIP() {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      ip = data.ip
+      console.log("Got IP: ",ip)
+      console.log("Attempting to send to backend")
+      sendIP(data)
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+    }
+
+  }
+  async function sendIP(data) {
+     await fetch('http://127.0.0.1:5001/ip', {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(data),
+        });
+  }
+</script>
+
+<head>
+  <title>YayBlaze's Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body onclick="getIP()" onload="getIP()">
+  <div id="container">
+    <div class="tile"></div>
+  </div>
+  <div
+    class="bg"
+    style="font-family: &quot;Nerko One&quot;, cursive; font-size: 50px"
+  >
+    Welcome
+  </div>
+
+  <img src="static/down-arrow.png" alt="scroll" id="down-arrow" />
+  <div id="main">
+    <div id="discord">Discord: yayblaze</div>
+    <div id="items">thanks for the ip :D</div>
+  </div>
+</body>
+
+<style>
+  #discord {
+    color: #7785cc;
+    /* background-color: #7785cc; */
+    width: fit-content;
+    margin: auto;
+    font-size: larger;
+    text-align: center;
+    /* box-shadow: 5px 5px 10px 5px #7785cc, -5px -5px 10px 5px #7785cc; */
+    /* box-shadow: 0 0 50px 15px #7785cc; */
+    text-shadow:
+      5px 5px 50px #7785cc,
+      5px 5px 50px #7785cc;
+  }
+
+  .out {
+    color: red;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(100px);
+    border: 5px solid red;
+    border-radius: 10px;
+    padding: 2%;
+    width: fit-content;
+    height: fit-content;
+    rotate: -35deg;
+  }
+
+  #secound {
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 3px solid #4c4c4c;
+    position: absolute;
+    top: 210%;
+    width: 80%;
+    height: fit-content;
+    padding: 3%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+  }
+
+  #items2 {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  .icon {
+    width: 50px;
+    transform: translate(-8px, 18px);
+  }
+  .obj {
+    border: 2px solid white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 2%;
+    margin: 2%;
+    font-size: large;
+    width: fit-content;
+    /* height: fit-content; */
+  }
+  #down-arrow {
+    pointer-events: none;
+    position: absolute;
+    margin: auto;
+    top: 90%;
+    width: 50px;
+  }
+  #main {
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 3px solid #4c4c4c;
+    position: absolute;
+    top: 100%;
+    width: 80%;
+    height: fit-content;
+    padding: 3%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+  }
+  #items {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  #main::before {
+    border: 3px solid white;
+    filter: blur(1.5rem);
+  }
+  .bg {
+    background-color: #1c1c1c;
+    border-radius: 10px;
+    padding: 5%;
+    text-align: center;
+    position: relative;
+  }
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+  .bg::after,
+  .bg::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(
+      from var(--angle),
+      rgb(248, 113, 113),
+      rgb(56 189 248),
+      rgb(74 222 128),
+      rgb(253, 224, 71),
+      rgb(248, 113, 113)
+    );
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    padding: 3px;
+    border-radius: 10px;
+    animation: spin 3s linear infinite;
+  }
+  .bg::before {
+    filter: blur(1.5rem);
+    opacity: 0.7;
+  }
+
+  @keyframes spin {
+    from {
+      --angle: 0deg;
+    }
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  :root {
+    --red-rgb: 248 113 113;
+    --blue-rgb: 56 189 248;
+    --green-rgb: 74 222 128;
+    --yellow-rgb: 253 224 71;
+
+    --background-rgb: 0 0 0;
+  }
+
+  body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--background-rgb));
+    overflow: hidden;
+    perspective: 2000px;
+    color: white;
+    font-family: Poppins;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  #container {
+    width: 140rem;
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-rows: repeat(40, 1fr);
+    grid-template-columns: repeat(40, 1fr);
+    position: absolute;
+    transform: rotateX(50deg) rotateY(-5deg) rotateZ(20deg) scale(1.25);
+    z-index: -10;
+  }
+
+  #container:after,
+  #container:before {
+    content: "";
+    position: absolute;
+    inset: 0px;
+    pointer-events: none;
+  }
+
+  #container:before {
+    z-index: 2;
+    background-image: url("https://assets.codepen.io/1468070/plus-pattern-center.png");
+    background-size: 5%;
+    background-repeat: repeat;
+    opacity: 0.25;
+  }
+
+  #container:after {
+    z-index: 3;
+    background: radial-gradient(
+      circle,
+      transparent 25%,
+      rgb(var(--background-rgb)) 80%
+    );
+  }
+
+  .tile {
+    border: 1px solid rgb(255 255 255 / 25%);
+    transition: background-color 1500ms;
+  }
+
+  .tile:hover {
+    transition-duration: 0ms;
+  }
+
+  .tile:nth-child(4n):hover {
+    background-color: rgb(var(--red-rgb));
+  }
+
+  .tile:nth-child(4n + 1):hover {
+    background-color: rgb(var(--blue-rgb));
+  }
+
+  .tile:nth-child(4n + 2):hover {
+    background-color: rgb(var(--green-rgb));
+  }
+
+  .tile:nth-child(4n + 3):hover {
+    background-color: rgb(var(--yellow-rgb));
+  }
+
+  .tile:nth-child(7n):hover {
+    background-color: rgb(var(--blue-rgb));
+  }
+
+  .tile:nth-child(7n + 3):hover {
+    background-color: rgb(var(--green-rgb));
+  }
+
+  .tile:nth-child(7n + 5):hover {
+    background-color: rgb(var(--yellow-rgb));
+  }
+
+  .tile:nth-child(7n + 6):hover {
+    background-color: rgb(var(--red-rgb));
+  }
+
+  .tile:nth-child(11n + 1):hover {
+    background-color: rgb(var(--red-rgb));
+  }
+
+  .tile:nth-child(11n + 4):hover {
+    background-color: rgb(var(--blue-rgb));
+  }
+
+  .tile:nth-child(11n + 7):hover {
+    background-color: rgb(var(--green-rgb));
+  }
+
+  .tile:nth-child(11n + 10):hover {
+    background-color: rgb(var(--yellow-rgb));
+  }
+</style>
